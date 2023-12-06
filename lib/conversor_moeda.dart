@@ -1,8 +1,6 @@
-// Importando os pacotes necessários
 import 'package:flutter/material.dart';
-import 'servico_moeda.dart';  // Sugestão de nome para 'currency_service.dart'
+import 'servico_moeda.dart';
 
-// Definindo um StatefulWidget que aceita um ServicoMoeda como parâmetro
 class ConversorDeMoeda extends StatefulWidget {
   final ServicoMoeda servicoMoeda;
 
@@ -12,18 +10,16 @@ class ConversorDeMoeda extends StatefulWidget {
   _ConversorDeMoedaState createState() => _ConversorDeMoedaState();
 }
 
-// Definindo o estado do StatefulWidget
 class _ConversorDeMoedaState extends State<ConversorDeMoeda> {
-  String moedaOrigem = 'USD'; // Moeda de origem inicial
-  String moedaDestino = 'BRL'; // Moeda de destino inicial
-  double valor = 1.0; // Valor inicial a ser convertido
+  String moedaOrigem = 'USD';
+  String moedaDestino = 'BRL';
+  double valor = 1.0;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        // Campo de texto para entrada do valor a ser convertido
         TextField(
           onChanged: (texto) {
             if (texto.isNotEmpty) {
@@ -33,7 +29,6 @@ class _ConversorDeMoedaState extends State<ConversorDeMoeda> {
                   valor = valorEntrada;
                 });
               } else {
-                // Exibe um SnackBar se o valor inserido não for um número válido
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Por favor, insira um número válido.')),
                 );
@@ -52,7 +47,6 @@ class _ConversorDeMoedaState extends State<ConversorDeMoeda> {
           ),
         ),
         SizedBox(height: 16.0),
-        // Dropdown para selecionar a moeda de origem
         DropdownButton<String>(
           value: moedaOrigem,
           onChanged: (String? novaMoeda) {
@@ -63,7 +57,6 @@ class _ConversorDeMoedaState extends State<ConversorDeMoeda> {
           items: obterItensDropdownMoedas(),
         ),
         SizedBox(height: 16.0),
-        // Dropdown para selecionar a moeda de destino
         DropdownButton<String>(
           value: moedaDestino,
           onChanged: (String? novaMoeda) {
@@ -74,7 +67,6 @@ class _ConversorDeMoedaState extends State<ConversorDeMoeda> {
           items: obterItensDropdownMoedas(),
         ),
         SizedBox(height: 30.0),
-        // FutureBuilder para exibir o resultado da conversão
         FutureBuilder<double>(
           future: widget.servicoMoeda.converterMoeda(moedaOrigem, moedaDestino),
           builder: (context, snapshot) {
@@ -86,7 +78,6 @@ class _ConversorDeMoedaState extends State<ConversorDeMoeda> {
             } else if (snapshot.hasError) {
               return Text("${snapshot.error}", style: TextStyle(fontSize: 18.0));
             }
-
             return CircularProgressIndicator();
           },
         ),
@@ -94,10 +85,12 @@ class _ConversorDeMoedaState extends State<ConversorDeMoeda> {
     );
   }
 
-  // Função para gerar os itens do Dropdown
   List<DropdownMenuItem<String>> obterItensDropdownMoedas() {
-    return <String>['USD - Dólar', 'BRL - Real', 'EUR - Euro', 'JPY - Iene', 'GBP - Libra', 'AUD - Dólar', 'CAD - Dólar', 'CHF - Franco', 'CNY - Yuan', 'SEK - Coroa', 'NZD - Dólar']
-        .map<DropdownMenuItem<String>>((String valor) {
+    return <String>[
+      'USD - Dólar', 'BRL - Real', 'EUR - Euro', 'JPY - Iene', 'GBP - Libra',
+      'AUD - Dólar', 'CAD - Dólar', 'CHF - Franco', 'CNY - Yuan', 'SEK - Coroa',
+      'NZD - Dólar'
+    ].map<DropdownMenuItem<String>>((String valor) {
       return DropdownMenuItem<String>(
         value: valor.substring(0, 3),
         child: Text(valor, style: TextStyle(fontSize: 16.0)),

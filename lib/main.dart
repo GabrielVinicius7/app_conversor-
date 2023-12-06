@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'servico_moeda.dart';  
-import 'conversor_moeda.dart';  
+import 'servico_moeda.dart';
+import 'conversor_moeda.dart';
 
 void main() {
   runApp(AppConversorMoeda());
 }
 
 class AppConversorMoeda extends StatelessWidget {
-  final ServicoMoeda servicoMoeda = ServicoMoeda();  // Sugestão de nome para 'CurrencyService'
+  final ServicoMoeda servicoMoeda = ServicoMoeda();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        key: GlobalKey<ScaffoldState>(), // Adicione esta linha
+        key: GlobalKey<ScaffoldState>(),
         appBar: AppBar(
           title: Text('Conversor de Moeda'),
           backgroundColor: const Color.fromARGB(255, 8, 8, 8),
@@ -40,7 +40,7 @@ class AppConversorMoeda extends StatelessWidget {
                     width: 3,
                   ),
                 ),
-                child: ConversorDeMoeda(servicoMoeda: servicoMoeda),  
+                child: ConversorDeMoeda(servicoMoeda: servicoMoeda),
               ),
             ),
           ],
